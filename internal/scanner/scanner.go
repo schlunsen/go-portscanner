@@ -5,6 +5,8 @@ import (
 	"net"
 	"sort"
 	"time"
+
+	"github.com/cheggaaa/pb"
 )
 
 type Scanner struct {
@@ -40,6 +42,8 @@ func (s Scanner) Scan() {
 	results := make(chan int)
 	var openports []int
 
+	var bar *pb.ProgressBar = pb.StartNew(int(s.Endport) - int(s.Startport))
+
 	// create a pool of workers
 	for i := 0; i < cap(ports); i++ {
 		go worker(s.Hostname, ports, results)
@@ -54,6 +58,7 @@ func (s Scanner) Scan() {
 
 	for i := s.Startport; i <= s.Endport; i++ {
 		port := <-results
+		bar.Increment()
 		if port != 0 {
 			fmt.Printf("%d open\n", port)
 			openports = append(openports, port)

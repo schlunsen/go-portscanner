@@ -3,6 +3,7 @@ module github.com/schlunsen/go-portscanner
 go 1.15
 
 require (
+	github.com/cheggaaa/pb v1.0.29
 	github.com/go-acme/lego v2.7.2+incompatible
 	github.com/go-acme/lego/v3 v3.9.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
